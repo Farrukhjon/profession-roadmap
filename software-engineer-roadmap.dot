@@ -1,0 +1,158 @@
+digraph eng_prog_road_map {
+	compound = true;
+	rankdir = "LR";
+	node [shape = circle margin = 0 style = filled color = blue fillcolor = white];
+	labelloc="t";
+	label = <<B>Roadmap of Software Engineer (Java Software Engineer)</B>>
+	
+	"Start" [shape = Mdiamond];
+	"Start" -> "Fundamentals";
+
+	subgraph cluster_math {
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "Discrete Math";
+		"Fundamentals" -> "Discrete Math";
+		"Discrete Math" -> "Propositional Calculus" -> "Recursion\n &\n Iteration";
+		"Discrete Math" -> "Set Theory" -> "Recursion\n &\n Iteration";
+		"Discrete Math" -> "Indcution" -> "Recursion\n &\n Iteration";
+    "Discrete Math" -> "Graph Theory" -> "Recursion\n &\n Iteration";
+	}
+	subgraph cluster_ds_and_alg {
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "Data Strcutures & Algorihms";
+		"Data Structures \n & \n Algorithms" -> "Arrays\n Strings\n Lists\n Stack \n Queue";
+		"Arrays\n Strings\n Lists\n Stack \n Queue" -> "Sorting";
+		"Sorting" -> "Merge sort" -> "Quick sort";
+		"Arrays\n Strings\n Lists\n Stack \n Queue" -> "Searching";
+		"Searching" -> "BST";
+		"BST" -> "Red-Black \n Tree" 
+		"Searching" -> "Hashing";
+		"Hashing" -> "hash \n Function"
+		"Hashing" -> "HashMap \n (Hashtable)"
+		"Hashing" -> "Design \n of \n Algorithms";
+		"Design \n of \n Algorithms" -> "Divide & Concur";
+		"Design \n of \n Algorithms" -> "Dynamic \n Programming";
+		"Design \n of \n Algorithms" -> "Breadth-First \n Search";
+		"Design \n of \n Algorithms" -> "Depth-First \n Search";
+		"Design \n of \n Algorithms" -> "Analysis \n of \n Algorithms";
+		"Analysis \n of \n Algorithms" -> "Time & Space \n Complexities"
+	}
+	"Recursion\n &\n Iteration" -> "Data Structures \n & \n Algorithms" [ltail=cluster_math lhead=cluster_ds_and_alg];
+
+	subgraph cluster_bits_and_bytes {
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "Bits & Bytes";
+		"Positional \n Notation" -> "Binary \n Number";
+		"Primitive \n Data Types" -> "byte\n short\n int\n long\n double";
+	}
+	"Recursion\n &\n Iteration" -> "Primitive \n Data Types" [label = "Optional" ltail=cluster_math lhead=cluster_bits_and_bytes];
+	"byte\n short\n int\n long\n double" -> "Data Structures \n & \n Algorithms" [ltail=cluster_bits_and_bytes lhead=cluster_ds_and_alg];
+
+	subgraph cluster_pl { 
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "Programming Language";
+		"Programming \n Language" -> "Domain \n of \n Programming";
+		"Domain \n of \n Programming" -> "System \n Programming";
+		"Domain \n of \n Programming" -> "Application \n Programming";
+		"Application \n Programming" -> "Frontend";
+		"Application \n Programming" -> "Mobile";
+		"Application \n Programming" -> "Backend";
+		"Backend" -> "Programming \n Paradigm";
+		"Programming \n Paradigm" -> "OOP";
+		"Programming \n Paradigm" -> "FP";
+		"Programming \n Paradigm" -> "OOP with FP";
+	}
+	"Merge sort" -> "Programming \n Language" [ltail=cluster_ds_and_alg lhead=cluster_pl label = "Concepts & Paradigms"];
+
+	subgraph cluster_oop_principles {
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "OOP Principles";
+		"Principles" -> "Abstraction";
+		"Principles" -> "Encapsulation";
+		"Principles" -> "Inheritance";
+		"Principles" -> "Polymorphism";
+		"Principles" -> "SOLID";
+		"SOLID" -> "Single \n Responsibility";
+		"SOLID" -> "Open/Closed";
+		"SOLID" -> "Liskov \n Substitution";
+		"SOLID" -> "Interface \n Segregation";
+		"SOLID" -> "Dependency \n Inversion";
+	}
+	"Programming \n Paradigm" -> "Principles" [ltail=cluster_pl, lhead=cluster_oop_principles];
+
+	subgraph cluster_java_core {
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "Java";
+		"Syntax \n & \n Semantic";
+		"I/O";
+		"Generics";
+		"Collections";
+		"Exceptions";
+		"Math \n & \n Numbers";
+		"String \n & \n Text";
+		"Date \n & \n Time";
+		"Concurrency \n & \n Thread";
+		"Lambda \n & \n Stream API";
+		"JVM & GC";
+	}
+	"Dependency \n Inversion" -> "Syntax \n & \n Semantic" [ltail=cluster_oop_principles, lhead=cluster_java_core];
+
+	subgraph cluster_dp {
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "Design Patterns"
+		"Design Patterns" -> "Creational";
+		"Design Patterns" -> "Structural";	
+		"Design Patterns" -> "Behavioral";
+		"Creational" -> "Abstract factory";
+		"Creational" -> "Builder";
+		"Creational" -> "Dependency \n Injection";
+		"Creational" -> "Factory Method";
+		"Creational" -> "Prototype";
+		"Structural" -> "Adapter \n (Wrapper)";
+		"Structural" -> "Bridge";
+		"Structural" -> "Composite";
+		"Structural" -> "Decorator";
+		"Structural" -> "Facade";
+		"Structural" -> "Proxy";
+		"Behavioral" -> "Chan of Responsibility";
+		"Behavioral" -> "Command";
+		"Behavioral" -> "Iterator";
+		"Behavioral" -> "Observer";
+		"Behavioral" -> "State";
+		"Behavioral" -> "Strategy";
+		"Behavioral" -> "Visitor";
+	}
+	"JVM & GC" -> "Design Patterns" [ltail=cluster_java_core, lhead=cluster_dp];
+	
+	subgraph cluster_java_libs_and_frameworks {
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "Libs & Frameworks";
+		"Libs \n & \n Frameworks";
+		"Libs \n & \n Frameworks" -> "Apache Commons";
+		"Libs \n & \n Frameworks" -> "Guava";
+		"Libs \n & \n Frameworks" -> "Spring \n & \n Spring Boot";
+		"Libs \n & \n Frameworks" -> "JUnit \n & \n Mockito";
+	}
+	"Visitor" -> "Libs \n & \n Frameworks" [ltail=cluster_dp, lhead=cluster_java_libs_and_frameworks];
+	
+	subgraph cluster_arch {
+		color = lightgrey; style = "rounded"; bgcolor="lightblue";
+		label = "Architecture & System Design"
+		"Enterprise Software \n Architecture" -> "Patterns \n ('a way/implementation \n of solving a recurring \n architectural problem')";
+		"Enterprise Software \n Architecture" -> "Styles \n ('a name/specification \n given to a recurrent \n architectural design')";
+		"Styles" -> "Monolith";
+		"Styles" -> "Microservices";
+		"Monolith" -> "Patterns";
+		"Microservices" -> "Patterns";
+		"Patterns" -> "Layered \n Architecture";
+		"Patterns" -> "Microkernel \n Architecture \n (Core System \n with \n Plugin modules)"
+		"Patterns" -> "Eent-Driven \n Architecture";
+		"Patterns" -> "API Gateway \n Architecture";
+		"API Gateway \n Architecture" -> "Web API";
+		"Web API" -> "REST";
+		"Web API" -> "gRPC";
+		"Patterns" -> "Client-Server \n Architecture";
+	}
+	"Libs \n & \n Frameworks" -> "Enterprise Software \n Architecture" [ltail=cluster_java_libs_and_frameworks lhead=cluster_arch];
+	
+}
