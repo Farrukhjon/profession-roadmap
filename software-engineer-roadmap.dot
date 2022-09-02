@@ -30,7 +30,7 @@ digraph eng_prog_road_map {
 		"Hashing" -> "hash \n Function"
 		"Hashing" -> "HashMap \n (Hashtable)"
 		"Hashing" -> "Design \n of \n Algorithms";
-		"Design \n of \n Algorithms" -> "Divide & Concur";
+		"Design \n of \n Algorithms" -> "Divide & Conquer";
 		"Design \n of \n Algorithms" -> "Dynamic \n Programming";
 		"Design \n of \n Algorithms" -> "Breadth-First \n Search";
 		"Design \n of \n Algorithms" -> "Depth-First \n Search";
