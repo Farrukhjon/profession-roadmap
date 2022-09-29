@@ -1,0 +1,20 @@
+digraph ci_cd {
+    rankdir = "LR"; labelloc="t";
+    node [shape = circle margin = 0 style = filled color = blue fillcolor = white];
+
+	CI_CD [label  = "CI/CD"];
+	infra_mgmt [label = "Infrastructure Management"];
+
+	EngX -> CI_CD;
+	CI_CD -> {
+	    "Continuous \n Integration";
+	    "Continuous \n Delivery";
+	    "CI/CD Practices";
+	    "CI/CD Pipeline";
+	    "Rules of CI/CD";
+	    "CI/CD Servers";
+	}
+}
+
+
+

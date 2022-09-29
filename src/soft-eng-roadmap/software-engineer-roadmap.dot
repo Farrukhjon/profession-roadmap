@@ -14,12 +14,12 @@ digraph eng_prog_road_map {
 		"Fundamentals" -> "Discrete Math";
 		"Discrete Math" -> "Propositional Calculus" -> "Recursion\n &\n Iteration";
 		"Discrete Math" -> "Set Theory" -> "Recursion\n &\n Iteration";
-		"Discrete Math" -> "Indcution" -> "Recursion\n &\n Iteration";
+		"Discrete Math" -> "Induction" -> "Recursion\n &\n Iteration";
     "Discrete Math" -> "Graph Theory" -> "Recursion\n &\n Iteration";
 	}
 	subgraph cluster_ds_and_alg {
 		color = lightgrey; style = "rounded"; bgcolor="lightblue";
-		label = "Data Strcutures & Algorihms";
+		label = "Data Structures & Algorithms";
 		"Data Structures \n & \n Algorithms" -> "Arrays\n Strings\n Lists\n Stack \n Queue";
 		"Arrays\n Strings\n Lists\n Stack \n Queue" -> "Sorting";
 		"Sorting" -> "Merge sort" -> "Quick sort";
@@ -27,14 +27,18 @@ digraph eng_prog_road_map {
 		"Searching" -> "BST";
 		"BST" -> "Red-Black \n Tree" 
 		"Searching" -> "Hashing";
-		"Hashing" -> "hash \n Function"
-		"Hashing" -> "HashMap \n (Hashtable)"
-		"Hashing" -> "Design \n of \n Algorithms";
-		"Design \n of \n Algorithms" -> "Divide & Conquer";
-		"Design \n of \n Algorithms" -> "Dynamic \n Programming";
-		"Design \n of \n Algorithms" -> "Breadth-First \n Search";
-		"Design \n of \n Algorithms" -> "Depth-First \n Search";
-		"Design \n of \n Algorithms" -> "Analysis \n of \n Algorithms";
+		"Hashing" -> {
+		    "hash \n Function";
+		    "HashMap \n (Hashtable)";
+		    dis_alg [ label = "Design \n of \n Algorithms" ];
+		}
+		dis_alg -> {
+		    "Divide & Conquer";
+		    "Dynamic \n Programming";
+		    "Breadth-First \n Search";
+		    "Depth-First \n Search";
+		    "Analysis \n of \n Algorithms";
+		 }
 		"Analysis \n of \n Algorithms" -> "Time & Space \n Complexities"
 	}
 	"Recursion\n &\n Iteration" -> "Data Structures \n & \n Algorithms" [ltail=cluster_math lhead=cluster_ds_and_alg];
@@ -67,16 +71,20 @@ digraph eng_prog_road_map {
 	subgraph cluster_oop_principles {
 		color = lightgrey; style = "rounded"; bgcolor="lightblue";
 		label = "OOP Principles";
-		"Principles" -> "Abstraction";
-		"Principles" -> "Encapsulation";
-		"Principles" -> "Inheritance";
-		"Principles" -> "Polymorphism";
-		"Principles" -> "SOLID";
-		"SOLID" -> "Single \n Responsibility";
-		"SOLID" -> "Open/Closed";
-		"SOLID" -> "Liskov \n Substitution";
-		"SOLID" -> "Interface \n Segregation";
-		"SOLID" -> "Dependency \n Inversion";
+		"Principles" -> {
+		    "Abstraction";
+		    "Encapsulation";
+		    "Inheritance";
+		    "Polymorphism";
+		    "SOLID";
+		}
+		"SOLID" -> {
+		    "Single \n Responsibility";
+		    "Open/Closed";
+		    "Liskov \n Substitution";
+		    "Interface \n Segregation";
+		    "Dependency \n Inversion";
+		}
 	}
 	"Programming \n Paradigm" -> "Principles" [ltail=cluster_pl, lhead=cluster_oop_principles];
 
@@ -100,59 +108,75 @@ digraph eng_prog_road_map {
 	subgraph cluster_dp {
 		color = lightgrey; style = "rounded"; bgcolor="lightblue";
 		label = "Design Patterns"
-		"Design Patterns" -> "Creational";
-		"Design Patterns" -> "Structural";	
-		"Design Patterns" -> "Behavioral";
-		"Creational" -> "Abstract factory";
-		"Creational" -> "Builder";
-		"Creational" -> "Dependency \n Injection";
-		"Creational" -> "Factory Method";
-		"Creational" -> "Prototype";
-		"Structural" -> "Adapter \n (Wrapper)";
-		"Structural" -> "Bridge";
-		"Structural" -> "Composite";
-		"Structural" -> "Decorator";
-		"Structural" -> "Facade";
-		"Structural" -> "Proxy";
-		"Behavioral" -> "Chan of Responsibility";
-		"Behavioral" -> "Command";
-		"Behavioral" -> "Iterator";
-		"Behavioral" -> "Observer";
-		"Behavioral" -> "State";
-		"Behavioral" -> "Strategy";
-		"Behavioral" -> "Visitor";
+
+		"Design Patterns" -> {
+		    "Creational";
+		    "Structural";
+		    "Behavioral";
+		}
+
+		"Creational" -> {
+		    "Abstract factory";
+		    "Builder";
+		    "Dependency \n Injection";
+		    "Factory Method";
+		    "Prototype";
+		}
+		"Structural" -> {
+		    "Adapter \n (Wrapper)";
+		    "Bridge";
+		    "Composite";
+		    "Decorator";
+		    "Facade";
+		    "Proxy";
+		}
+		"Behavioral" -> {
+		    "Chan of Responsibility";
+		    "Command";
+		    "Iterator";
+		    "Observer";
+		    "State";
+		    "Strategy";
+		    "Visitor";
+		}
 	}
 	"JVM & GC" -> "Design Patterns" [ltail=cluster_java_core, lhead=cluster_dp];
 	
 	subgraph cluster_java_libs_and_frameworks {
 		color = lightgrey; style = "rounded"; bgcolor="lightblue";
 		label = "Libs & Frameworks";
-		"Libs \n & \n Frameworks";
-		"Libs \n & \n Frameworks" -> "Apache Commons";
-		"Libs \n & \n Frameworks" -> "Guava";
-		"Libs \n & \n Frameworks" -> "Spring \n & \n Spring Boot";
-		"Libs \n & \n Frameworks" -> "JUnit \n & \n Mockito";
+		l_and_f [label = "Libs \n & \n Frameworks"]
+		l_and_f -> {
+		    "Apache Commons";
+		    "Guava";
+		    "Spring \n & \n Spring Boot";
+		    "JUnit \n & \n Mockito";
+		}
 	}
-	"Visitor" -> "Libs \n & \n Frameworks" [ltail=cluster_dp, lhead=cluster_java_libs_and_frameworks];
+	"Visitor" -> l_and_f [ltail=cluster_dp, lhead=cluster_java_libs_and_frameworks];
 	
 	subgraph cluster_arch {
 		color = lightgrey; style = "rounded"; bgcolor="lightblue";
 		label = "Architecture & System Design"
 		"Enterprise Software \n Architecture" -> "Patterns \n ('a way/implementation \n of solving a recurring \n architectural problem')";
 		"Enterprise Software \n Architecture" -> "Styles \n ('a name/specification \n given to a recurrent \n architectural design')";
-		"Styles" -> "Monolith";
-		"Styles" -> "Microservices";
+		"Styles" -> { "Monolith"; "Microservices" };
 		"Monolith" -> "Patterns";
 		"Microservices" -> "Patterns";
-		"Patterns" -> "Layered \n Architecture";
-		"Patterns" -> "Microkernel \n Architecture \n (Core System \n with \n Plugin modules)"
-		"Patterns" -> "Eent-Driven \n Architecture";
-		"Patterns" -> "API Gateway \n Architecture";
+		"Patterns" -> {
+		    "Layered \n Architecture";
+		    "Microkernel \n Architecture \n (Core System \n with \n Plugin modules)"
+		    "Eent-Driven \n Architecture";
+		    "API Gateway \n Architecture";
+		}
 		"API Gateway \n Architecture" -> "Web API";
-		"Web API" -> "REST";
-		"Web API" -> "gRPC";
+		"Web API" -> {
+		    "REST";
+		    "GraphQL";
+		    "gRPC";
+		}
 		"Patterns" -> "Client-Server \n Architecture";
 	}
-	"Libs \n & \n Frameworks" -> "Enterprise Software \n Architecture" [ltail=cluster_java_libs_and_frameworks lhead=cluster_arch];
+	l_and_f -> "Enterprise Software \n Architecture" [ltail=cluster_java_libs_and_frameworks lhead=cluster_arch];
 	
 }
