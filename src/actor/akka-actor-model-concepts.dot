@@ -1,0 +1,86 @@
+digraph akka_actor {
+	rankdir = "LR";
+	compound = true;
+	node [shape = circle style = filled fillcolor = white color = blue margin = 0];
+
+	subgraph cluster_actor_model {
+		label = <<B>Concepts</B>>; style = rounded; bgcolor = lightblue;
+		
+		"Actor \n model" -> Actor [label = "is \n about"];
+		Actor -> "State" [label = "encapsulates \n is a container for"];
+		Actor -> "Behavior" [label = "encapsulates \n is a container for"];
+		Actor -> "Children" [label = "may have \n is a container for"];
+		Actor -> "Supervisor \n Strategy" [label = "has"];
+		Actor -> "Reference (Address ?)" [label = "is used \n to represent \n the actor \n to outside by"];
+		Actor -> Address [label = "has \n is a container for"];
+		Actor -> "Unit \n of \n Computation" [label = "is"];
+		Actor -> "Mailbox" [label = "associated \n with"];
+		Actor -> "Messages" [label = "communicat \n through"]; 
+		Address -> Actor [label = "is \n the entry point \n for \n communication \n with that actor"];
+		Msg_Delivery [label = "Message \n Delivery \n Mechanism"];
+		Actor -> Msg_Delivery [label = "has"];
+		Msg_Delivery -> "at-most-once \n delivery" [label = "may be"];
+		Msg_Delivery -> "at-least-once \n delivery" [label = "may be"];
+		Msg_Delivery -> "exactly-once \n delivery" [label = "may be"];
+		Actor -> ActorSystem [label = "naturally \n form \n hierarchies"];
+		ActorSystem -> "1…N Threads" [label = "is \n a heavyweight \n structure"];
+		ActorSystem -> "1…N Threads" [label = "allocates"];
+		Actor -> "Three \n fundamental \n actions" [label = "can do"];
+		Actions [label = "Three \n fundamental \n actions"];
+		Actions -> "a finite \n number of messages \n to Actors it knows" [label = <<B>send</B>>]; 
+		Actions -> "a finite \n number of \n new Actors" [label = <<B>create</B>>];
+		Actions -> "the behavior \n to be applied \n to the next message" [label = <<B>designate</B>>];
+	}
+
+	subgraph cluster_actor_ref {
+		label = <<B>Actors communicating with one another</B>>;
+		style = rounded;
+		bgcolor = lightblue;
+		Actor -> "ActorRef" [label = "Most actor communication \n is done using references - ActorRef"];
+
+        actor_1 [label = "Actor 1"];
+        actor_2 [label = "Actor 2"];
+        actor_1_mb [shape = box label = "Actor 1 \n Mailbox"];
+        actor_2_mb [shape = box label = "Actor 2 \n Mailbox"];
+
+        actor_1_mb -> actor_1 [label = "Message"];
+        { rank=same actor_1 -> actor_2_mb [label = "Message"] };
+        actor_2_mb -> actor_2 [label = "Message"];
+        { rank=same actor_2 -> actor_1_mb [label = "Message"] };
+	}
+
+	subgraph cluster_supervision {
+		label = <<B>Actor Supervision Strategies</B>>; style = rounded; bgcolor = lightblue;
+		Actor -> "Children" [label = "Supervise"];
+		Supervisor [label = "Supervisor \n Strategy"];
+
+		Actor -> Supervisor;
+
+		Supervisor -> Default;
+		Default -> "ActorInitializationException" -> "Stops \n the failing \n child actor";
+		Default -> "ActorKilledException" -> "Stops \n the failing \n child actor";
+		Default -> "DeathPactException" -> "Stops \n the failing \n child actor";
+		Default -> "Exception" -> "Restarts \n the failing \n child actor";
+		Default -> "Other types \n of Throwable" -> "Escalates \n to parent actor";
+
+		Supervisor -> "Crashed \n Children" [label = "is the policy \n to apply for"];
+		Supervisor -> {
+		    OneForOneStrategy;
+		    AllForOneStrategy;
+		}
+
+		Directive [label = "Directive \n (fault handling)"];
+		Directive -> {
+		    Stop;
+		    Start;
+		    Resume;
+		}
+		spec_note [shape = note label = "specified \n in the"];
+		Stop -> spec_note;
+		Start -> spec_note;
+		Resume -> spec_note;
+		spec_note -> Decider;
+	}
+
+}
+
