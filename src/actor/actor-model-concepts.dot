@@ -12,7 +12,7 @@ digraph akka_actor {
 		"Actor" -> "Behavior" [label = "encapsulates \n is a container for"];
 		"Actor" -> "Children" [label = "may have \n is a container for"];
 		"Actor" -> "Supervisor \n Strategy" [label = "has"];
-		"Actor" -> "Reference (Address ?)" [label = "is used \n to represente \n the actor \n to outside by"];
+		"Actor" -> "Reference (Address ?)" [label = "is used \n to represent \n the actor \n to outside by"];
 		"Actor" -> "Address" [label = "has \n is a container for"];
 		"Actor" -> "Unit \n of \n Computation" [label = "is"];
 		"Actor" -> "Mailbox" [label = "associated \n with"];
@@ -59,7 +59,7 @@ digraph akka_actor {
 		"Default" -> "DeathPactException" -> "Stops \n the failing \n child actor";
 		"Default" -> "Exception" -> "Restarts \n the failing \n child actor";
 		"Default" -> "Other types \n of Throwable" -> "Escalates \n to parent actor";
-		"Supervisor \n Strategy" -> "Crashed \n Children" [lable = "is the policy \n to apply for"];
+		"Supervisor \n Strategy" -> "Crashed \n Children" [label = "is the policy \n to apply for"];
 		"Supervisor \n Strategy" -> "OneForOneStrategy";
 		"Supervisor \n Strategy" -> "AllForOneStrategy";
 		"Directive \n (fault handling)" -> "Stop";
