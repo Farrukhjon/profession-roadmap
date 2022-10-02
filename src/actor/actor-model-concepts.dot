@@ -35,11 +35,17 @@ digraph akka_actor {
 		label = <<B>Actors communicating with one another</B>>;
 		style = rounded;
 		bgcolor = lightblue;
-		"Actor" -> "Reference" -> "ActorRef" [label = "Most actor communication \n is done using references"];
-		"Actor 1" -> "Actor 2 \n Mailbox" [label = "Message"];
-		"Actor 2" -> "Actor 1 \n Mailbox" [label = "Message"];
-		"Actor 1 \n Mailbox" -> "Actor 1" [label = "Message"];
-		"Actor 2 \n Mailbox" -> "Actor 2" [label = "Message"];
+		"Actor" -> "ActorRef" [label = "Most actor communication \n is done using references - ActorRef"];
+
+        actor_1 [label = "Actor 1"];
+        actor_2 [label = "Actor 2"];
+        actor_1_mb [shape = box label = "Actor 1 \n Mailbox"];
+        actor_2_mb [shape = box label = "Actor 2 \n Mailbox"];
+
+        actor_1_mb -> actor_1 [label = "Message"];
+        { rank=same actor_1 -> actor_2_mb [label = "Message"] };
+        actor_2_mb -> actor_2 [label = "Message"];
+        { rank=same actor_2 -> actor_1_mb [label = "Message"] };
 	}
 
 	subgraph cluster_supervision {
