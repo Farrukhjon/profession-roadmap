@@ -105,5 +105,16 @@ digraph akka_actor {
 		spec_note -> Decider;
 	}
 
+	subgraph cluster_routing {
+        label = <<B>Routing Messages</B>>; style = rounded; bgcolor = lightblue;
+	    Routee [label = "Routee \n (destination actor(s))"];
+	    Messages -> Router [label = "can be sent \n based on \n a routing strategy via"];
+	    Router -> Routee [label = "send to"];
+	    RouterLogic -> {
+	        Custom; in_lib [label = "Out of the Box"];
+        }
+        in_lib -> { RoundRobinRoutingLogic; RandomRoutingLogic; SmallestMailboxRoutingLogic }
+	}
+
 }
 
