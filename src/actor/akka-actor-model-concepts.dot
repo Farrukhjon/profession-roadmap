@@ -1,7 +1,7 @@
 digraph akka_actor {
 	rankdir = "LR";
 	compound = true;
-	node [shape = circle style = filled fillcolor = white color = blue margin = 0];
+	node [shape = circle style = filled fillcolor = white color = blue margin = 0.01];
 
 	subgraph cluster_actor_model {
 		label = <<B>Concepts</B>>; style = rounded; bgcolor = lightblue;
@@ -14,8 +14,7 @@ digraph akka_actor {
 		Actor -> "Reference (Address ?)" [label = "is used \n to represent \n the actor \n to outside by"];
 		Actor -> Address [label = "has \n is a container for"];
 		Actor -> "Unit \n of \n Computation" [label = "is"];
-		Actor -> "Mailbox" [label = "associated \n with"];
-		Actor -> "Messages" [label = "communicat \n through"]; 
+		Actor -> "Messages" [label = "communicat \n through"];
 		Address -> Actor [label = "is \n the entry point \n for \n communication \n with that actor"];
 		Msg_Delivery [label = "Message \n Delivery \n Mechanism"];
 		Actor -> Msg_Delivery [label = "has"];
@@ -32,10 +31,29 @@ digraph akka_actor {
 		Actions -> "the behavior \n to be applied \n to the next message" [label = <<B>designate</B>>];
 	}
 
+	subgraph cluster_mailbox {
+	    label = <<B>Actor's Mailbox</B>>; style = rounded; bgcolor = lightblue;
+        Actor -> Mailbox [label = "associated \n with"];
+	    note_mb_1 [label = "holds the messages \l that are destined for an Actor" shape = note];
+	    note_mb_2 [label = "The default mailbox is used \n when the mailbox is not specified" shape = note];
+	    note_mb_3 [label = "each Actor has its own mailbox" shape = note];
+	    Mailbox -> {
+	        note_mb_1;
+	        note_mb_2;
+	        note_mb_3;
+	    } [dir = back];
+	    Default_MB [label = "UnboundedMailbox \n (default)"];
+	    Mailbox -> Default_MB;
+	    Default_MB -> "java.util.concurrent.ConcurrentLinkedQueue" [label = "backed by"];
+	    Mailbox -> Other;
+	    Other -> {
+	        "SingleConsumerOnlyUnboundedMailbox \n (backed by Multiple-Producer \n Single-Consumer \n queue)";
+	        NonBlockingBoundedMailbox; UnboundedPriorityMailbox;
+	    }
+	}
+
 	subgraph cluster_actor_ref {
-		label = <<B>Actors communicating with one another</B>>;
-		style = rounded;
-		bgcolor = lightblue;
+		label = <<B>Actors communicating with one another</B>>; style = rounded; bgcolor = lightblue;
 		Actor -> "ActorRef" [label = "Most actor communication \n is done using references - ActorRef"];
 
         actor_1 [label = "Actor 1"];
@@ -63,11 +81,16 @@ digraph akka_actor {
 		Default -> "Exception" -> "Restarts \n the failing \n child actor";
 		Default -> "Other types \n of Throwable" -> "Escalates \n to parent actor";
 
-		Supervisor -> "Crashed \n Children" [label = "is the policy \n to apply for"];
+        note_crashed [label = "is the policy \l to apply \l for Crashed Children" shape = note];
+		Supervisor -> note_crashed [dir = back];
 		Supervisor -> {
 		    OneForOneStrategy;
 		    AllForOneStrategy;
-		}
+		} [label = "type"]
+		note_strategy_1 [label = "applies an obtained directive \l only to the failed child" shape = note];
+		OneForOneStrategy -> note_strategy_1 [dir = back];
+		note_strategy_2 [label = "applies an obtained directive \l to the failed child \l and all siblings as well" shape = note dir = back];
+		AllForOneStrategy -> note_strategy_2 [dir = back];
 
 		Directive [label = "Directive \n (fault handling)"];
 		Directive -> {
