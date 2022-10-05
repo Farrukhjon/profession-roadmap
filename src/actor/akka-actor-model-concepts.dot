@@ -33,6 +33,7 @@ digraph akka_actor {
 
 	subgraph cluster_mailbox {
 	    label = <<B>Actor's Mailbox</B>>; style = rounded; bgcolor = lightblue;
+	    Mailbox [shape=cylinder width=.03 height=2 ]
         Actor -> Mailbox [label = "associated \n with"];
 	    note_mb_1 [label = "holds the messages \l that are destined for an Actor" shape = note];
 	    note_mb_2 [label = "The default mailbox is used \n when the mailbox is not specified" shape = note];
@@ -52,10 +53,9 @@ digraph akka_actor {
 	    }
 	}
 
-	subgraph cluster_actor_ref {
+    Actor -> actor_1 [headlabel="Communication" ltail=cluster_actor_model lhead=cluster_actor_communication];
+	subgraph cluster_actor_communication {
 		label = <<B>Actors communicating with one another</B>>; style = rounded; bgcolor = lightblue;
-		Actor -> "ActorRef" [label = "Most actor communication \n is done using references - ActorRef"];
-
         actor_1 [label = "Actor 1"];
         actor_2 [label = "Actor 2"];
         actor_1_mb [shape = box label = "Actor 1 \n Mailbox"];
@@ -66,6 +66,30 @@ digraph akka_actor {
         actor_2_mb -> actor_2 [label = "Message"];
         { rank=same actor_2 -> actor_1_mb [label = "Message"] };
 	}
+
+    Actor -> ActorRef [headlabel = "Communication \n is done \n using references - ActorRef" ltail = cluster_actor_model lhead=cluster_actor_ref];
+    subgraph cluster_actor_ref {
+        label = <<B>ActorRef is a Proxy to a real Actor instance</B>>; style = rounded; bgcolor = lightblue;
+        Create_Actor [label = "Creates an instance of an Actor" shape = note];
+        Create_Mailbox [label = "Creates an instance of mailbox" shape = note];
+        Create_MsgDispatcher [label = "Creates (?) \n an instance of message dispatcher \n (internal dispatcher?)" shape = note];
+        Returns_ActorRef_Note [label = "Returns Proxy object of the Actor \n (it's an instance of ActorRef) \n It does not return the original Actor object" shape = note];
+        Actor_System_Create [label = "ActorSystem.actorOf()" shape = note];
+        Actor_System_Create -> {
+            Create_Actor;
+            Create_Mailbox;
+            Create_MsgDispatcher;
+            Returns_ActorRef_Note;
+        } [dir = back style = dotted]
+        Outside [label="Outside World \n (non-Actor code)"];
+        Outside -> ActorRef [label = "message"];
+        "Actor \n (some sender)" -> ActorRef [label = "message"];
+        ActorRef -> MessageDispatcher [label = "message"];
+        MessageDispatcher -> Mailbox [taillabel = "Enqueue \n message"];
+        MessageDispatcher -> Mailbox [taillabel = "Dequeue \n message" dir=back];
+        MessageDispatcher -> "Actor Instance" [label = "message"];
+        Proxy_Note [label="this is a proxy" shape = note]; Proxy_Note -> ActorRef [style = dotted];
+    }
 
 	subgraph cluster_supervision {
 		label = <<B>Actor Supervision Strategies</B>>; style = rounded; bgcolor = lightblue;
