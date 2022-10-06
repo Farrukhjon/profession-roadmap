@@ -127,8 +127,11 @@
  - `Actor-to-non-Actor` communication
    - when there is no `sender` and when akka actor tries to send a message, then the message goes to the `DeadLetter`
 
-### Supervising Children Actors
+### Supervising Actors (in face of failure)
  - is about `fault-tolerance` property
+ - follows to `let it crash` principle
+   - instead of mixing fine-grained recovery, move that responsibility somewhere else - to Supervision
+ - allows to `declaratively` describe `what should happen when certain types of exceptions are thrown` in an actor
  - a parent Actor takes a decision and may perform
    - `Resume`:
      - Resume an Actor or all of its children Actors 
