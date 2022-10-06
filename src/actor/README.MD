@@ -126,3 +126,15 @@
    - sender(): ActorRef
  - `Actor-to-non-Actor` communication
    - when there is no `sender` and when akka actor tries to send a message, then the message goes to the `DeadLetter`
+
+### Supervising Children Actors
+ - is about `fault-tolerance` property
+ - a parent Actor takes a decision and may perform
+   - `Resume`:
+     - Resume an Actor or all of its children Actors 
+   - `Restart`:
+     - Restarts an Actor or all of its children Actors
+   - `Stop`:
+     - Stops Actor or all of its children Actors permanently
+   - `Escalate`:
+     - If it cannot decide what to do, it escalates to its `supervisor` Actor `with the failure` and `fails itself`
