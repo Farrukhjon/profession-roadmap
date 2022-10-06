@@ -16,7 +16,7 @@ for DOT_FILE in $DOT_FILES; do
   SRC_DOT_DIR="$(dirname $DOT_FILE)"
   OUT_DIR="${TARGET_DIR}/${SRC_DOT_DIR#*/}"
   mkdir -p $OUT_DIR
-  cat "${DOT_FILE}" | dot -T svg -o "$OUT_DIR/${SVG_FILE}"
+  dot -Tsvg -o "$OUT_DIR/${SVG_FILE}" "${DOT_FILE}"
   if [ $? -ne 0 ]; then
     echo "Could not process ${DOT_FILE}, exiting..."
     exit 1

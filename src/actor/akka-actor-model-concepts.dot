@@ -1,51 +1,50 @@
 digraph akka_actor {
-	rankdir = "LR";
-	compound = true;
-	node [shape = circle style = filled fillcolor = white color = blue margin = 0.01];
+	rankdir="LR"; compound=true; ranksep=0.05; nodesep=0.05;
+	node [shape=circle style=filled fillcolor=white color=blue margin=0.01];
 
 	subgraph cluster_actor_model {
-		label = <<B>Concepts</B>>; style = rounded; bgcolor = lightblue;
+		label=<<B>Concepts</B>>; style=rounded; bgcolor=lightblue;
 		
-		"Actor \n model" -> Actor [label = "is \n about"];
-		Actor -> "State" [label = "encapsulates \n is a container for"];
-		Actor -> "Behavior" [label = "encapsulates \n is a container for"];
-		Actor -> "Children" [label = "may have \n is a container for"];
-		Actor -> "Supervisor \n Strategy" [label = "has"];
-		Actor -> "Reference (Address ?)" [label = "is used \n to represent \n the actor \n to outside by"];
-		Actor -> Address [label = "has \n is a container for"];
-		Actor -> "Unit \n of \n Computation" [label = "is"];
-		Actor -> "Messages" [label = "communicat \n through"];
-		Address -> Actor [label = "is \n the entry point \n for \n communication \n with that actor"];
-		Msg_Delivery [label = "Message \n Delivery \n Mechanism"];
-		Actor -> Msg_Delivery [label = "has"];
-		Msg_Delivery -> "at-most-once \n delivery" [label = "may be"];
-		Msg_Delivery -> "at-least-once \n delivery" [label = "may be"];
-		Msg_Delivery -> "exactly-once \n delivery" [label = "may be"];
-		Actor -> ActorSystem [label = "naturally \n form \n hierarchies"];
-		ActorSystem -> "1…N Threads" [label = "is \n a heavyweight \n structure"];
-		ActorSystem -> "1…N Threads" [label = "allocates"];
-		Actor -> "Three \n fundamental \n actions" [label = "can do"];
-		Actions [label = "Three \n fundamental \n actions"];
-		Actions -> "a finite \n number of messages \n to Actors it knows" [label = <<B>send</B>>]; 
-		Actions -> "a finite \n number of \n new Actors" [label = <<B>create</B>>];
-		Actions -> "the behavior \n to be applied \n to the next message" [label = <<B>designate</B>>];
+		"Actor \n model" -> Actor [label="is \n about"];
+		Actor -> "State" [label="encapsulates \n is a container for"];
+		Actor -> "Behavior" [label="encapsulates \n is a container for"];
+		Actor -> "Children" [label="may have \n is a container for"];
+		Actor -> "Supervisor \n Strategy" [label="has"];
+		Actor -> "Reference (Address ?)" [label="is used \n to represent \n the actor \n to outside by"];
+		Actor -> Address [label="has \n is a container for"];
+		Actor -> "Unit \n of \n Computation" [label="is"];
+		Actor -> "Messages" [label="communicat \n through"];
+		Address -> Actor [label="is \n the entry point \n for \n communication \n with that actor"];
+		Msg_Delivery [label="Message \n Delivery \n Mechanism"];
+		Actor -> Msg_Delivery [label="has"];
+		Msg_Delivery -> "at-most-once \n delivery" [label="may be"];
+		Msg_Delivery -> "at-least-once \n delivery" [label="may be"];
+		Msg_Delivery -> "exactly-once \n delivery" [label="may be"];
+		Actor -> ActorSystem [label="naturally \n form \n hierarchies"];
+		ActorSystem -> "1…N Threads" [label="is \n a heavyweight \n structure"];
+		ActorSystem -> "1…N Threads" [label="allocates"];
+		Actor -> "Three \n fundamental \n actions" [label="can do"];
+		Actions [label="Three \n fundamental \n actions"];
+		Actions -> "a finite \n number of messages \n to Actors it knows" [label=<<B>send</B>>]; 
+		Actions -> "a finite \n number of \n new Actors" [label=<<B>create</B>>];
+		Actions -> "the behavior \n to be applied \n to the next message" [label=<<B>designate</B>>];
 	}
 
 	subgraph cluster_mailbox {
-	    label = <<B>Actor's Mailbox</B>>; style = rounded; bgcolor = lightblue;
+	    label=<<B>Actor's Mailbox</B>>; style=rounded; bgcolor=lightblue;
 	    Mailbox [shape=cylinder width=.03 height=2 ]
-        Actor -> Mailbox [label = "associated \n with"];
-	    note_mb_1 [label = "holds the messages \l that are destined for an Actor" shape = note];
-	    note_mb_2 [label = "The default mailbox is used \n when the mailbox is not specified" shape = note];
-	    note_mb_3 [label = "each Actor has its own mailbox" shape = note];
+        Actor -> Mailbox [label="associated \n with"];
+	    note_mb_1 [label="holds the messages \l that are destined for an Actor" shape=note];
+	    note_mb_2 [label="The default mailbox is used \n when the mailbox is not specified" shape=note];
+	    note_mb_3 [label="each Actor has its own mailbox" shape=note];
 	    Mailbox -> {
 	        note_mb_1;
 	        note_mb_2;
 	        note_mb_3;
-	    } [dir = back];
-	    Default_MB [label = "UnboundedMailbox \n (default)"];
+	    } [dir=back];
+	    Default_MB [label="UnboundedMailbox \n (default)"];
 	    Mailbox -> Default_MB;
-	    Default_MB -> "java.util.concurrent.ConcurrentLinkedQueue" [label = "backed by"];
+	    Default_MB -> "java.util.concurrent.ConcurrentLinkedQueue" [label="backed by"];
 	    Mailbox -> Other;
 	    Other -> {
 	        "SingleConsumerOnlyUnboundedMailbox \n (backed by Multiple-Producer \n Single-Consumer \n queue)";
@@ -55,48 +54,47 @@ digraph akka_actor {
 
     Actor -> actor_1 [headlabel="Communication" ltail=cluster_actor_model lhead=cluster_actor_communication];
 	subgraph cluster_actor_communication {
-		label = <<B>Actors communicating with one another</B>>; style = rounded; bgcolor = lightblue;
-        actor_1 [label = "Actor 1"];
-        actor_2 [label = "Actor 2"];
-        actor_1_mb [shape = box label = "Actor 1 \n Mailbox"];
-        actor_2_mb [shape = box label = "Actor 2 \n Mailbox"];
+		label=<<B>Actors communicating with one another</B>>; style=rounded; bgcolor=lightblue;
+        actor_1 [label="Actor 1"];
+        actor_2 [label="Actor 2"];
+        actor_1_mb [shape=box label="Actor 1 \n Mailbox"];
+        actor_2_mb [shape=box label="Actor 2 \n Mailbox"];
 
-        actor_1_mb -> actor_1 [label = "Message"];
-        { rank=same actor_1 -> actor_2_mb [label = "Message"] };
-        actor_2_mb -> actor_2 [label = "Message"];
-        { rank=same actor_2 -> actor_1_mb [label = "Message"] };
+        actor_1_mb -> actor_1 [label="Message"];
+        { rank=same actor_1 -> actor_2_mb [label="Message"] };
+        actor_2_mb -> actor_2 [label="Message"];
+        { rank=same actor_2 -> actor_1_mb [label="Message"] };
 	}
 
-    Actor -> ActorRef [headlabel = "Communication \n is done \n using references - ActorRef" ltail = cluster_actor_model lhead=cluster_actor_ref];
+    Actor -> ActorRef [headlabel="Communication \n is done \n using references - ActorRef" ltail=cluster_actor_model lhead=cluster_actor_ref];
     subgraph cluster_actor_ref {
-        label = <<B>ActorRef is a Proxy to a real Actor instance</B>>; style = rounded; bgcolor = lightblue;
-        Create_Actor [label = "Creates an instance \l of an Actor" shape = note];
-        Create_Mailbox [label = "Creates an instance \l of mailbox" shape = note];
-        LooksUp_MsgDispatcher [label = "Looks up an instance \l of message dispatcher \l (default/user dispatcher)" shape = note];
-        Returns_ActorRef_Note [label = "Creates and returns ActorRef \l ActorRef is a proxy object \l to the actual Actor instance object. \l It does not return the original Actor object" shape = note];
-        Actor_System_actorOf [label = "ActorSystem.actorOf() \n or \n ActorContext.actorOf()" shape = note];
-        Actor_System_actorOf -> {
-            Create_Actor;
-            Create_Mailbox;
-            LooksUp_MsgDispatcher;
-            Returns_ActorRef_Note;
-        } [style = dotted]
+        label=<<B>ActorRef is a Proxy to a real Actor instance</B>>; style=rounded; bgcolor=lightblue;
+        note_create_actor [label="Creates an instance \l of an Actor" shape=note];
+        note_create_mailbox [label="Creates an instance \l of mailbox" shape=note];
+        note_looksup_msgdispatcher [label="Looks up an instance \l of message dispatcher \l (default/user dispatcher)" shape=note];
+        note_returns_actorref [label="Creates and returns ActorRef \l ActorRef is a proxy object \l to the actual Actor instance object. \l It does not return the original Actor object" shape=note];
+        note_proxy [label="this is a proxy" shape=note];
+        note_actor_system_actorof [label="ActorSystem.actorOf() \n or \n ActorContext.actorOf()" shape=note];
+        note_actor_system_actorof -> {
+            note_create_actor; note_create_mailbox; note_looksup_msgdispatcher; note_returns_actorref;
+        } [style=dotted]; {rank=same; note_create_actor; note_create_mailbox; note_looksup_msgdispatcher; note_returns_actorref}
         Outside [label="Outside World \n (non-Actor code)"];
-        Outside -> ActorRef [label = "message"];
-        "Actor \n (some sender)" -> ActorRef [label = "message"];
-        ActorRef -> MessageDispatcher [label = "message"];
-        MessageDispatcher -> Mailbox [taillabel = "Enqueue \n message"];
-        MessageDispatcher -> Mailbox [taillabel = "Dequeue \n message" dir=back];
-        MessageDispatcher -> "Actor Instance" [label = "message"];
-        MessageDispatcher_Note [label = "default executor and \l it fallbacks to fork-join-executor" shape = note];
-        MessageDispatcher_Note -> MessageDispatcher [style = dotted];
-        Proxy_Note [label="this is a proxy" shape = note]; Proxy_Note -> ActorRef [style = dotted];
+        Outside -> ActorRef [label="message"];
+        "Actor \n (some sender)" -> ActorRef [label="message"];
+        ActorRef -> MessageDispatcher [label="message"];
+        MessageDispatcher -> Mailbox [taillabel="Enqueue \n message"];
+        MessageDispatcher -> Mailbox [taillabel="Dequeue \n message" dir=back];
+        MessageDispatcher -> "Actor Instance" [label="message"];
+        note_messagedispatcher [label="default executor and \l it fallbacks to fork-join-executor" shape=note];
+        note_messagedispatcher -> MessageDispatcher [style=dotted]; {rank=same; note_messagedispatcher; MessageDispatcher};
+        note_proxy -> ActorRef [style=dotted]; {rank=same; ActorRef; note_proxy}
+        MessageDispatcher -> DeadLetter [headlabel="message \n when the Actor is terminated" style=dotted];
     }
 
 	subgraph cluster_supervision {
-		label = <<B>Actor Supervision Strategies</B>>; style = rounded; bgcolor = lightblue;
-		Actor -> "Children" [label = "Supervise"];
-		Supervisor [label = "Supervisor \n Strategy"];
+		label=<<B>Actor Supervision Strategies</B>>; style=rounded; bgcolor=lightblue;
+		Actor -> "Children" [label="Supervise"];
+		Supervisor [label="Supervisor \n Strategy"];
 
 		Actor -> Supervisor;
 
@@ -107,24 +105,24 @@ digraph akka_actor {
 		Default -> "Exception" -> "Restarts \n the failing \n child actor";
 		Default -> "Other types \n of Throwable" -> "Escalates \n to parent actor";
 
-        note_crashed [label = "is the policy \l to apply \l for Crashed Children" shape = note];
-		Supervisor -> note_crashed [dir = back];
+        note_crashed [label="is the policy \l to apply \l for Crashed Children" shape=note];
+		Supervisor -> note_crashed [dir=back];
 		Supervisor -> {
 		    OneForOneStrategy;
 		    AllForOneStrategy;
-		} [label = "type"]
-		note_strategy_1 [label = "applies an obtained directive \l only to the failed child" shape = note];
-		OneForOneStrategy -> note_strategy_1 [dir = back];
-		note_strategy_2 [label = "applies an obtained directive \l to the failed child \l and all siblings as well" shape = note dir = back];
-		AllForOneStrategy -> note_strategy_2 [dir = back];
+		} [label="type"]
+		note_strategy_1 [label="applies an obtained directive \l only to the failed child" shape=note];
+		OneForOneStrategy -> note_strategy_1 [dir=back];
+		note_strategy_2 [label="applies an obtained directive \l to the failed child \l and all siblings as well" shape=note dir=back];
+		AllForOneStrategy -> note_strategy_2 [dir=back];
 
-		Directive [label = "Directive \n (fault handling)"];
+		Directive [label="Directive \n (fault handling)"];
 		Directive -> {
 		    Stop;
 		    Start;
 		    Resume;
 		}
-		spec_note [shape = note label = "specified \n in the"];
+		spec_note [shape=note label="specified \n in the"];
 		Stop -> spec_note;
 		Start -> spec_note;
 		Resume -> spec_note;
@@ -132,12 +130,12 @@ digraph akka_actor {
 	}
 
 	subgraph cluster_routing {
-        label = <<B>Routing Messages</B>>; style = rounded; bgcolor = lightblue;
-	    Routee [label = "Routee \n (destination actor(s))"];
-	    Messages -> Router [label = "can be sent \n based on \n a routing strategy via"];
-	    Router -> Routee [label = "send to"];
+        label=<<B>Routing Messages</B>>; style=rounded; bgcolor=lightblue;
+	    Routee [label="Routee \n (destination actor(s))"];
+	    Messages -> Router [label="can be sent \n based on \n a routing strategy via"];
+	    Router -> Routee [label="send to"];
 	    RouterLogic -> {
-	        Custom; in_lib [label = "Out of the Box"];
+	        Custom; in_lib [label="Out of the Box"];
         }
         in_lib -> { RoundRobinRoutingLogic; RandomRoutingLogic; SmallestMailboxRoutingLogic }
 	}
