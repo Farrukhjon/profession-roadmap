@@ -70,17 +70,17 @@ digraph akka_actor {
     Actor -> ActorRef [headlabel = "Communication \n is done \n using references - ActorRef" ltail = cluster_actor_model lhead=cluster_actor_ref];
     subgraph cluster_actor_ref {
         label = <<B>ActorRef is a Proxy to a real Actor instance</B>>; style = rounded; bgcolor = lightblue;
-        Create_Actor [label = "Creates an instance of an Actor" shape = note];
-        Create_Mailbox [label = "Creates an instance of mailbox" shape = note];
-        Create_MsgDispatcher [label = "Creates (?) \n an instance of message dispatcher \n (internal dispatcher?)" shape = note];
-        Returns_ActorRef_Note [label = "Returns Proxy object of the Actor \n (it's an instance of ActorRef) \n It does not return the original Actor object" shape = note];
-        Actor_System_Create [label = "ActorSystem.actorOf() \n or \n ActorContext.actorOf()" shape = note];
-        Actor_System_Create -> {
+        Create_Actor [label = "Creates an instance \l of an Actor" shape = note];
+        Create_Mailbox [label = "Creates an instance \l of mailbox" shape = note];
+        LooksUp_MsgDispatcher [label = "Looks up an instance \l of message dispatcher \l (default/user dispatcher)" shape = note];
+        Returns_ActorRef_Note [label = "Creates and returns ActorRef \l ActorRef is a proxy object \l to the actual Actor instance object. \l It does not return the original Actor object" shape = note];
+        Actor_System_actorOf [label = "ActorSystem.actorOf() \n or \n ActorContext.actorOf()" shape = note];
+        Actor_System_actorOf -> {
             Create_Actor;
             Create_Mailbox;
-            Create_MsgDispatcher;
+            LooksUp_MsgDispatcher;
             Returns_ActorRef_Note;
-        } [dir = back style = dotted]
+        } [style = dotted]
         Outside [label="Outside World \n (non-Actor code)"];
         Outside -> ActorRef [label = "message"];
         "Actor \n (some sender)" -> ActorRef [label = "message"];
@@ -88,6 +88,8 @@ digraph akka_actor {
         MessageDispatcher -> Mailbox [taillabel = "Enqueue \n message"];
         MessageDispatcher -> Mailbox [taillabel = "Dequeue \n message" dir=back];
         MessageDispatcher -> "Actor Instance" [label = "message"];
+        MessageDispatcher_Note [label = "default executor and \l it fallbacks to fork-join-executor" shape = note];
+        MessageDispatcher_Note -> MessageDispatcher [style = dotted];
         Proxy_Note [label="this is a proxy" shape = note]; Proxy_Note -> ActorRef [style = dotted];
     }
 
