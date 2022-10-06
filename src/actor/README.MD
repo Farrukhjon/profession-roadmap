@@ -73,3 +73,56 @@
    - encapsulates `state` and `behavior`
    - `does NOT receive messages directly` from the outside world
    - it receives messages from `ActorRef` to `dispatcher` to `itself` only.
+
+### The lifecycle of an Akka Actor
+#### Lifecycle methods managed by Actor's Supervisor:
+ - `ActorSystem.actorOf()`
+   - creates `top-level` Actors
+ - `ActorContext.actorOf()`
+   - creates `child` (subordinate) Actors
+ - `Actor.receive()`
+ - `Actor.preStart()`
+   - is invoked
+     - immediately `after creating` a new Actor
+     - before moving to the `Started` state
+     - If an Actor is going to be `restarted by its parent` Actor
+   - this method can be `overriden`
+ - `Actor.postStop()`
+   - is invoked
+     - immediately `after stopping` an Actor
+     - before moving to the `Stopped` state
+ - `Actor.preRestart()`
+   - is invoked before moving to the `Restarted` state
+   - Actor picks up all its subordinate Actors and stops them
+   - then it invokes its `postStop()` method
+ - `Actor.postRestart()`
+   - when invoked, Actor enters into the `Restarted` state
+   - makes a call to that Actor's `preStart()` method
+ - `ActorContext.stop()` or `ActorSystem.stop()`
+   - shutting down this Actor and all Children gracefully and recursively
+ - `ActorSystem.terminate()`
+   - shuts down the whole ActorSystem so that all of its Actors are stopped automatically
+
+### Akka Actor Basic Operations
+ - `Create` an Actor
+ - `Send` messages
+ - `Receive` messages
+   - during receive, an actor may `change` its internal `state` and `behavior`
+ - `Stop` an Actor
+ - `Become`/`Unbecoming` an Actor (actual in FSM DSL context)
+ - `Supervise` an Actor
+
+### Sending messages approaches to an Actor
+ - `tell` (!) function
+   - `Fire and Forget` model
+   - sends a message `asynchronously` and `return immediately`
+ - `ask` (?) function
+   - `Send and Receive` model (Ask pattern)
+   - sends a message asynchronously and return `Future`
+   - and retrieve results sometime in the future
+
+### Replaying messages approaches from an Actor
+ - `Actor-to-Actor` communication
+   - sender(): ActorRef
+ - `Actor-to-non-Actor` communication
+   - when there is no `sender` and when akka actor tries to send a message, then the message goes to the `DeadLetter`
