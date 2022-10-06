@@ -74,7 +74,7 @@ digraph akka_actor {
         Create_Mailbox [label = "Creates an instance of mailbox" shape = note];
         Create_MsgDispatcher [label = "Creates (?) \n an instance of message dispatcher \n (internal dispatcher?)" shape = note];
         Returns_ActorRef_Note [label = "Returns Proxy object of the Actor \n (it's an instance of ActorRef) \n It does not return the original Actor object" shape = note];
-        Actor_System_Create [label = "ActorSystem.actorOf()" shape = note];
+        Actor_System_Create [label = "ActorSystem.actorOf() \n or \n ActorContext.actorOf()" shape = note];
         Actor_System_Create -> {
             Create_Actor;
             Create_Mailbox;
