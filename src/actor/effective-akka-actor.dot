@@ -1,0 +1,39 @@
+digraph effective_akka_actor {
+
+    Effective_Akka_Actor [label = "Effective Akka Actor"];
+
+    Effective_Akka_Actor -> {
+        One_Actor [label = "one actor is not Actor"];
+        Structure_Actors [label = "Structure Actors"];
+        Naming [label = "Name Actors appropriately"];
+        Matrix [label = "Matrix of mutability"];
+    }
+
+    One_Actor -> {
+        One_Actor_Collab [label = "Collaboration with many actors"];
+    }
+
+    One_Actor_Collab -> {
+        "do one thing and do it well";
+        "then talk to each Actors to do other things";
+        "child are used for workers";
+        "introduce actors to each other \n (d not use 'actorSelection')";
+    }
+
+    Structure_Actors -> {
+        "parent/child relationship";
+        "based on doing type of tasks" -> {
+            "group actors doing similar tasks";
+            "group actors into parent/child";
+        }
+    }
+
+    Naming -> {
+        "give meaningful name";
+        ""
+    }
+
+
+
+}
+

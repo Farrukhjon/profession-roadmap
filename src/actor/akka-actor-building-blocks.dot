@@ -1,0 +1,10 @@
+graph building_blocks {
+    label = <<B>Building Blocks of Akka Actor Toolkit</B>>;
+    subgraph cluster_bb {
+        Actor;
+        ActorContext; ActorMaterializer;
+        ActorSystem; ExecutionContext;
+        JVM;
+    }
+
+}
