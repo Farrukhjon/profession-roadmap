@@ -1,14 +1,92 @@
-# Profession Roadmap - Ontological Representation - Knowledge Graphs - Semantic Network
+# Profession Roadmap to Software Engineering
 
-_"...**Knowledge graphs are** a specific type of graph with an emphasis on `contextual understanding`.
-Knowledge graphs are `interlinked sets of facts that describe real-world` entities,
-events, or things and their interrelations in a human- and machine-understandable format."_ _**Knowledge Graphs** by Jesus Barrasa, Amy E. Hodler, Jim Webber_
+## Topics (Techniques and Technologies)
 
-_"...what transforms a graph into a knowledge graph is the application of an organizing `principle` that helps people and software to understand it.
-Historically this has loftily been called `semantics`,
-but we just think of it as making the `data smarter`."_ _**Building Knowledge Graphs** by Jesus Barrasa, Maya Natarajan, Jim Webber_
-
-## Generate graphs and diagrams from
- - Run `compile.sh`
-   - Compiles source dot files from the `src` directory
-   - Results are generated in `target` directory
+- Business (in Software Engineering)
+    - Agile
+    - Human Resources
+    - Leadership
+    - Marketing & Sales
+    - Product Management
+    - Project Management
+    - Soft Skills
+    - Team Management
+- Cloud Computing
+    - Amazon AWS
+    - Google Cloud
+    - Microsoft Azure
+    - Virtual Machines
+    - IaaS/PaaS/SaaS
+- Data Engineering
+    - Data Warehouse
+    - Apache Spark
+    - Apache Kafka
+    - Data Lake
+    - Streaming & Messaging
+    - NoSQL Databases
+        - Cassandra
+        - Mongo DB
+        - Redis
+    - Relational Databases
+        - SQL
+        - Oracle DB
+        - MS SQL Server
+- Data Science
+    - R
+    - Pandas
+    - Statistics
+    - Data Visualization
+    - Python
+    - Jupiter Notebook
+- Design
+    - Graphic Design
+        - 2D & 3D Modeling and Design
+        - Logo Design
+        - Typography
+    - Web Design
+    - User Experience (UX)
+- IT & Operations
+    - Continuous Integration/Continuous Delivery (CI/CD)
+    - Docker
+    - Git
+    - Kubernetes
+    - Networking
+    - Operating Systems
+        - Linux
+        - Windows
+    - Terraform
+- ML & AI
+    - Deep Learning
+    - Hyperparameter Tuning
+    - MLOps
+    - Natural Language Processing
+    - Scikit-Learn
+    - TensorFlow
+- Programming Languages
+    - C & C++
+    - C# & .Net
+    - Java & JVM/JDK
+    - JavaScript & Node.JS
+    - Python
+- Programming Paradigms
+    - Object-Oriented Design and Programming
+    - Functional Programming
+- Mobile Development
+    - Android Development
+    - iOS Development
+- Web Development
+    - Frontend Development
+        - Browsers
+        - DOM & BOM
+    - Backed Development
+        - Web Servers
+- Software Architecture
+    - Architectural Patterns
+    - Distributed Systems
+    - Domain-Driven Design
+- Security
+    - Application Security
+    - Authentication and Authorization
+    - Disaster Recovery
+    - Network Security
+    - Security Architecture
